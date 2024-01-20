@@ -1,0 +1,12 @@
+    .section .text
+    .globl _start
+_start:
+    la a0, var    # Load the address of var into a0
+    li a1, 42     # Load the immediate value 42 into a1
+    sw a1, 0(a0)  # Store the value in a1 at the address in a0
+    lw a2, 0(a0)  # Load the value at the address in a0 into a2
+    ecall         # Make a system call (in this case, it does nothing)
+
+    .section .data
+var:
+    .word 0       # Reserve a word of memory for var, initialize to 0

@@ -1,0 +1,7 @@
+    .section .text
+    .globl _start
+_start:
+    li a0, 10     # Load the immediate value 10 into register a0
+    li a1, 20     # Load the immediate value 20 into register a1
+    add a2, a0, a1 # Add the values in registers a0 and a1, store the result in a2
+    ecall         # Make a system call (in this case, it does nothing)

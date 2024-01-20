@@ -1,0 +1,8 @@
+    .section .text
+    .globl _start
+_start:
+    li a0, 0      # Initialize a0 to 0
+loop:
+    addi a0, a0, 1 # Increment a0 by 1
+    blt a0, 10, loop # If a0 < 10, branch to label 'loop'
+    ecall         # Make a system call (in this case, it does nothing)
