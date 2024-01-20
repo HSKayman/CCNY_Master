@@ -1,0 +1,1 @@
+This repository contains code developed while studying the book [“A Beginner’s Guide for Engineers: Fundamentals and Applications”](https://www.amazon.com/Beginners-Guide-Engineers-Fundamentals-Applications/dp/B08GB52M12/ref=cm_cr_arp_d_product_top?ie=UTF8). The code applies the concepts and techniques from the book.

@@ -1,0 +1,13 @@
+Companies,Type,Costs,Passengers,Gasoline
+Company A,Diesel,550,43,20
+Company A,Hybrid,706,42,15
+Company A,CNG,630,46,21
+Company B,Diesel ,590,41,25
+Company B,Hybrid,700,39,17
+Company B,CNG,656,40,24
+Company C,Diesel ,586,45,22
+Company C,Hybrid,698,44,18
+Company C,CNG,643,41,26
+Company D,Diesel ,601,44,23
+Company D,Hybrid,720,45,22
+Company D,CNG,670,40,25

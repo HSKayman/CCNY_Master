@@ -1,0 +1,38 @@
+Class,ClassType,Class_Name,Credits,Cost,Costs
+USSO10100,LIBERAL,US Society and People,3,671,304
+HIST20400,LIBERAL,Early-Modern Europe,3,788,283
+HIST20600,LIBERAL,Modern Europe,3,718,263
+HIST34900,LIBERAL,The Third Reich,3,636,329
+THR21200,LIBERAL,Introduction to Drama,3,598,317
+ENGR10100,ENGR,Engineering Design I,1,678,293
+ENGR10300,ENGR,Computer-Aided Analysis Tools for Engineers,3,730,281
+ENGR19999,ENGR,A Data Science and Statistical Approach to Programming,3,632,333
+ENGR23000,ENGR,Thermodynamics,3,596,260
+ENGR27600,ENGR,Engineering Economics,3,720,287
+ENGR30100,ENGR,Introduction to Satellite Remote Sensing and Imaging,3,522,332
+ENGR55600,ENGR,Nuclear Reactor Design Operation and Safety,3,569,349
+EE33300,EE,Electromagnetics II,3,710,319
+EE34200,EE,Electronics II,3,664,312
+EE35700,EE,Electric Power Engineering,3,643,296
+EE44100,EE,Solid State Devices,3,734,281
+EE45700,EE,Digital Integrated Circuits,3,717,250
+EE46000,EE,Computer Communications Systems,3,591,297
+EE46300,EE,Wireless Communications,3,671,250
+EE59837,EE,AI Solutions in EE,3,515,240
+MATH30800,ELECTIVE,Bridge to Advanced Mathematics,3,551,256
+MATH32300,ELECTIVE,Advanced Calculus I,3,573,296
+MATH32404,ELECTIVE,Advanced Calculus II,3,651,342
+MATH32800,ELECTIVE,Methods of Numerical Analysis,3,644,305
+MATH34500,ELECTIVE,Theory of Numbers,3,663,295
+MATH36500,ELECTIVE,Element of Combinatorics,3,713,311
+MATH36600,ELECTIVE,Introduction to Applied Math Computation,3,595,270
+MATH38100,ELECTIVE,Discrete Models of Financial Mathematics,3,794,322
+MATH47700,ELECTIVE,Stochastic Processes,3,734,295
+CSC44500,ELECTIVE,Big Data Management and Analysis,3,793,272
+CSC47000,ELECTIVE,Image Processing,3,779,289
+CSC48000,ELECTIVE,Computer Security,3,642,322
+CSC59978,ELECTIVE,Multidimensional data analytics ad human perception,3,738,280
+PHYS32400,ELECTIVE,Introduction to Geneal Relativity,3,591,269
+PHYS55200,ELECTIVE,Quantum Physics II,3,645,330
+PHYS55400,ELECTIVE,Solid State Physics,3,740,298
+PHYS36100,ELECTIVE,Mathematical Methods in Physics,3,521,327
