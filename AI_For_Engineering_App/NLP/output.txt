@@ -1,2 +1,0 @@
-2023-11-22 percentage of times correct prediction: 52.6 %  with error 2.6%
-2023-11-22 percentage of times correct prediction: 26.3 %  with error 5.3%
