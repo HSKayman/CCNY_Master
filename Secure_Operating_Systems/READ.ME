@@ -1,0 +1,30 @@
+Meltdown and Spectre attacks are explained in Spectre.c and Meltdown.c. 
+
+Additionally, I wrote Meltdown and Spectre with arguments. 
+They work as follows: 
+'gcc -o meltdown Meltdown_wArg.c -O2 -march=native' 
+and 
+'./meltdown <memory address> <length> <CACHE_HIT_THRESHOLD>' 
+
+Similarly, 
+'gcc -o spectre Spectre_wArg.c -O2 -march=native' 
+and 
+'./spectre <memory address> <length> <CACHE_HIT_THRESHOLD>'
+
+
+
+---
+
+Scenario:
+
+- `Victim.c` contains a secret string.
+- `Attacker.c` runs `Victim.c`, reads the memory address from it, and then executes `Spectre_wArg.c` to attempt to capture the secret string.
+
+
+Follow steps to attack victim.c
+
+gcc -o spectre_with_argument Spectre_wArg.c -O2 -march=native
+gcc -o meltdown_with_argument Meltdown_wArg.c -O2 -march=native
+gcc -o victim victim.c -O2 -march=native
+gcc -o attack Attacker.c -O2 -march=native
+
