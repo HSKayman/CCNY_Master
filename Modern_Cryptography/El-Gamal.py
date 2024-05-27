@@ -42,19 +42,19 @@ def is_prime(n):
         i += 6   
     return True
 
-def generate_keys():
+def generate_keys(noofbits):
     while True:
-        p = random.getrandbits(20) 
+        p = random.getrandbits(noofbits) # ? secrets.token_bytes(noofbits)
         if is_prime(p):
             break
-    g = random.randint(2, p-2)  
-    x = random.randint(1, p-2)  
+    g = random.randint(2, p-2)  # ? secrets.randbelow(p-2) or find_primitive_root(p) 
+    x = random.randint(1, p-2)  # ? secrets.randbelow(p-2)
     y = pow(g, x, p)# Public key y = g^x mod p
     return p, g, x, y
 
 def sign(p, g, x, message):
     while True:
-        k = random.randint(1, p-2)
+        k = random.randint(1, p-2) # secrets.randbelow(p-2)
         if gcd(k, p-1) == 1:# k must be relatively prime to p-1
             break
     r = pow(g, k, p)
@@ -69,14 +69,30 @@ def verify(p, g, y, message, r, s):
     v2 = (pow(y, r, p) * pow(r, s, p)) % p
     return v1 == v2
 
-#EXAMPLE
-p, g, x, y = generate_keys()
-print("Public key (p, g, y):", p, g, y)
-print("Private key x:", x)
+import time
+for i in range(15,200,5):
+    print("For",i,"bits")
+    start = time.time()
+    #EXAMPLE
+    p, g, x, y = generate_keys(i)
+    print("Public key (p, g, y):", p, g, y)
+    print("Private key x:", x)
+    end = time.time()
+    t1 = end-start
+    print("Time taken for key generation:", t1)
 
-message = 123365765754674
-r, s = sign(p, g, x, message)
-print("Signature (r, s):", r, s)
+    start = time.time()
+    message = 123365765754674
+    r, s = sign(p, g, x, message)
+    print("Signature (r, s):", r, s)
+    end = time.time()
+    t2 = end-start
+    print("Time taken for signing:", t2)
 
-valid = verify(p, g, y, message, r, s)
-print("Is the signature valid?", valid)
+
+    start = time.time()
+    valid = verify(p, g, y, message, r, s)
+    print("Is the signature valid?", valid)
+    end = time.time()
+    print("Time taken for verification:", end-start)
+    print("Time taken for key generation, signing and verification:", end-start + t1 + t2)

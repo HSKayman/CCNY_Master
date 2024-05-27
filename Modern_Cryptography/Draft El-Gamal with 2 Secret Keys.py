@@ -70,67 +70,73 @@ def find_primitive_root(p):
             return g
     return None
 
-def generate_keys(noofuser):
+def generate_keys():
     while True:
         p = random.getrandbits(20) 
         if is_prime(p):
             break
     g = find_primitive_root(p) 
-    
-    xi = []
-    yi = []
-    for user in range(noofuser):
-        x = random.randint(1, p - 2)
-        y = pow(g, x, p)
-        xi.append(x)
-        yi.append(y)
+    x = random.randint(1, p-2)  
+    y = pow(g, x, p)# Public key y = g^x mod p
+    return p, g, x, y
 
-    return p, g, xi, yi
 
-def sign(p, g, xi, message):
-    ri = []
-    si = []
-    for x in xi:
-        while True:
-            k = random.randint(1, p-2)
-           # if gcd(k, p-1) == 1:# k must be relatively prime to p-1
-            if mod_inverse(k, p-1) is not None: 
-                break
-       
-        r = pow(g, k, p)
-        k_inv = mod_inverse(k, p-1)
-        s = (k_inv * (message - x * r)) % (p-1)
-        ri.append(r)
-        si.append(s)
-    return ri, si
+def split_private_key(x, p): # can be more splitable ???
+    x1 = random.randint(1, x-1)
+    x2 = (x - x1) % (p - 1)
+    return (x1, x2)
 
-def verify(p, g, y, message, ri, si):
-    for i in range(len(ri)):
-        if not (1 <= ri[i] <= p-1):
-            return False
-        v1 = pow(g, message, p)
-        v2 = (pow(y[i], ri[i], p) * pow(ri[i], si[i], p)) % p
-        if v1 != v2:
-            return False
-    
-    return True
+def combine_signatures(r1, s1, r2, s2, p, g):
+    s = (s1 * s2) % (p-1)
+
+    combined_r = (r1 + r2) % p
+    return combined_r, s
+
+def sign(p, g, x, message):
+    while True:
+        k = random.randint(1, p-2)
+       # if gcd(k, p-1) == 1:# k must be relatively prime to p-1
+        if mod_inverse(k, p-1) is not None:
+            print(k)
+            break
+   
+    r = pow(g, k, p)
+    k_inv = mod_inverse(k, p-1)
+    s = (k_inv * (message - x * r)) % (p-1)
+    return r, s
+
+def verify(p, g, y, message, r, s):
+    if not (1 <= r <= p-1):
+        return False
+    v1 = pow(g, message, p)
+    v2 = (pow(y, r, p) * pow(r, s, p)) % p
+    return v1 == v2
 
 
 #EXAMPLE
-p, g, x, y = generate_keys(2)
+p, g, x, y = generate_keys()
 print("Public key (p, g, y):", p, g, y)
 print("Private key x:", x)
 
+x1,x2 = split_private_key(x,p)
+print("First Group Private key x:", x1)
+print("Second Group Private key x:", x2)
 
 message = 123365765754674
+r1, s1 = sign(p, g, x1, message)
+r2, s2 = sign(p, g, x2, message)
+print("First Group Signature (r, s):", r1, s1)
+print("Second Group Signature (r, s):", r2, s2)
+combined_r, signature = combine_signatures(r1, s1, r2, s2, p, g)
+print("Group Signature (r, s):", combined_r, signature)
+
 r, s = sign(p, g, x, message)
-print("Group Signature (r, s):", r, s)
-#s[-1] -= 1 
-#r, s = sign(p, g, x, message)
-#print("Normal Signature (r, s):", r, s)
+print("Normal Signature (r, s):", r, s)
 
 valid = verify(p, g, y, message, r, s)
 print("Is the signature valid?", valid)
 
+valid = verify(p, g, y, message, combined_r, signature)
+print("Is the signature valid?", valid)
 
 

@@ -70,60 +70,71 @@ def find_primitive_root(p):
             return g
     return None
 
-def generate_keys(noofuser):
+def generate_keys():
     while True:
         p = random.getrandbits(20) 
         if is_prime(p):
             break
     g = find_primitive_root(p) 
-    
+    x = random.randint(1, p-2)  
+    y = pow(g, x, p)# Public key y = g^x mod p
+    return p, g, x, y
+
+def split_keys(p, x, noofusers): # Not Sure it is safe need to be tested
     xi = []
-    yi = []
-    for user in range(noofuser):
-        x = random.randint(1, p - 2)
-        y = pow(g, x, p)
-        xi.append(x)
-        yi.append(y)
-
-    return p, g, xi, yi
-
-def sign(p, g, xi, message):
-    ri = []
-    si = []
-    for x in xi:
-        while True:
-            k = random.randint(1, p-2)
-           # if gcd(k, p-1) == 1:# k must be relatively prime to p-1
-            if mod_inverse(k, p-1) is not None: 
-                break
-       
-        r = pow(g, k, p)
-        k_inv = mod_inverse(k, p-1)
-        s = (k_inv * (message - x * r)) % (p-1)
-        ri.append(r)
-        si.append(s)
-    return ri, si
-
-def verify(p, g, y, message, ri, si):
-    for i in range(len(ri)):
-        if not (1 <= ri[i] <= p-1):
-            return False
-        v1 = pow(g, message, p)
-        v2 = (pow(y[i], ri[i], p) * pow(ri[i], si[i], p)) % p
-        if v1 != v2:
-            return False
+    for i in range(noofusers):
+        xi.append(random.randint(1, p-2)) # find strong random
     
-    return True
+    initial_sum = sum(xi)
+    requirment = ((initial_sum // (p-2))*(p-2) + x) - initial_sum
+
+    for i in range(noofusers):
+        if requirment == 0:
+            break
+        if i == noofusers - 1:  
+            xi[i] = (xi[i] + requirment) % (p-2)
+            requirment = 0
+        else:
+            if requirment < 0:
+                add_value = random.randint(0,abs(requirment)+1) * -1# find strong random
+            else:
+                add_value = random.randint(0,abs(requirment) + 1)# find strong random
+            xi[i] = (xi[i] +add_value) % (p-2)
+            requirment = (requirment - add_value) % (p-2)
+    
+    #Check Duplicate Element
+    return xi
+
+def sign(p, g, x, message):
+    while True:
+        k = random.randint(1, p-2)
+       # if gcd(k, p-1) == 1:# k must be relatively prime to p-1
+        if mod_inverse(k, p-1) is not None:
+            print(k)
+            break
+   
+    r = pow(g, k, p)
+    k_inv = mod_inverse(k, p-1)
+    s = (k_inv * (message - (sum(x)%(p-2)) * r)) % (p-1)
+    return r, s
+
+def verify(p, g, y, message, r, s):
+    if not (1 <= r <= p-1):
+        return False
+    v1 = pow(g, message, p)
+    v2 = (pow(y, r, p) * pow(r, s, p)) % p
+    return v1 == v2
 
 
 #EXAMPLE
-p, g, x, y = generate_keys(2)
+p, g, x, y = generate_keys()
 print("Public key (p, g, y):", p, g, y)
-print("Private key x:", x)
+print("Private key x:", x,"Destroyed")
 
-
+xi = split_keys(p,x,5)
+print("splited keys xi:", xi)
 message = 123365765754674
-r, s = sign(p, g, x, message)
+r, s = sign(p, g, xi, message)
 print("Group Signature (r, s):", r, s)
 #s[-1] -= 1 
 #r, s = sign(p, g, x, message)
