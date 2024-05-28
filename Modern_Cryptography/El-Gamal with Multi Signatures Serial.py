@@ -119,7 +119,6 @@ def sign(p, q, g, xi, yi, r, k, message,rlist):
     s[0] = (xi[0] + k[0] * r * message) % q
     for i in range(0, len(xi)):
         if pow(g, s[i-1], p) == pow(yi[i-1], pow(rlist[i-1], r * message, p), p): #Problem here
-            print("I am in at i = ",i)
             s[i] = ((s[i-1] + 1) * xi[i] + k[i] * r * message ) % q
     return s[-1]
 
