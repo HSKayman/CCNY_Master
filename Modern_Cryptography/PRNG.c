@@ -17,7 +17,7 @@ unsigned long rand(void) {
 
 int main() {
     // Set initial seed
-    srand(1234);
+    srand(12374);
 
     for (int i = 0; i < 10; ++i) {
         printf("%lu", rand());

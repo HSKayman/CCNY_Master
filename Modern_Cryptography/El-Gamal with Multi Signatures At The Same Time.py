@@ -131,7 +131,7 @@ p, g, x, y = generate_keys()
 print("Public key (p, g, y):", p, g, y)
 print("Private key x:", x,"Destroyed")
 
-xi = split_keys(p,x,5)
+xi = split_keys(p,x,1000)#1000 people 
 print("splited keys xi:", xi)
 message = 123365765754674
 r, s = sign(p, g, xi, message)

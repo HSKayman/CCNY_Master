@@ -82,7 +82,7 @@ def generate_keys(noofuser):
     for user in range(noofuser):
         x = random.randint(1, p - 2)
         y = pow(g, x, p)
-        xi.append(x)
+        xi.append(x) # we have problem  here because we didnt check this x is uniqu or not but it is negligible
         yi.append(y)
 
     return p, g, xi, yi
